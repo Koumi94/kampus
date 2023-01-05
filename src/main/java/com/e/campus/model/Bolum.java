@@ -1,5 +1,6 @@
 package com.e.campus.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 public class Bolum {
 
     private @Id
@@ -21,10 +22,10 @@ public class Bolum {
     private String name;
 
     public Bolum(String name) {
-
         this.name = name;
         this.createAt = LocalDateTime.now();
-
+    }
+    public Bolum(){
 
     }
 }
