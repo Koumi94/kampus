@@ -17,9 +17,31 @@ public class FacultyServiceImpl implements FacultyService{
         this.facultyRepository = facultyRepository;
     }
 
+    @Override
+    public List<Faculty> getAllFaculties() {
+        return null;
+    }
+
+    @Override
+    public Faculty getFacultyById(Long id) {
+        return null;
+    }
+
     public Faculty addFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
-    };
+    }
+
+    @Override
+    public Faculty updateFaculty(Long id, Faculty faculty) {
+        return null;
+    }
+
+    @Override
+    public void deleteFaculty(Long id) {
+
+    }
+
+    ;
 
 
     public Optional<Faculty> findFacultyByID(Long id) {
