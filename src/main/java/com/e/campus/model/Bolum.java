@@ -17,9 +17,9 @@ public class Bolum {
     private @Id
     @GeneratedValue long id;
 
-    private LocalDateTime createAt;
-
     private String name;
+
+    private LocalDateTime createAt;
 
     public Bolum(String name) {
         this.name = name;

@@ -1,30 +1,45 @@
 package com.e.campus.api;
 
 import com.e.campus.model.Bolum;
+
 import com.e.campus.service.BolumService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/bolum/")
-@RequiredArgsConstructor
+@RequestMapping("/bolumler")
 public class BolumController {
-    private BolumService bolumService;
 
-    @GetMapping()
-    public List<Bolum> getAllBlum(){
-        return bolumService.getAllBlum();
-    }
-    @GetMapping("addbolum")
-    public Bolum addFaculty(@RequestBody Bolum bolum){
-        return  bolumService.addBlum(bolum);
+    private final BolumService bolumService;
+
+    public BolumController(BolumService bolumService) {
+        this.bolumService = bolumService;
     }
 
-    @GetMapping("{id}")
-    public String findBlumByID(@PathVariable String id){
-        return bolumService.findBlumByID(Long.valueOf(id)).toString();
+    @GetMapping
+    public List<Bolum> getAllBolumler() {
+        return bolumService.getAllBolumler();
     }
+
+    @GetMapping("/{id}")
+    public Bolum getBolumById(@PathVariable Long id) {
+        return bolumService.getBolumById(id);
+    }
+
+    @PostMapping
+    public Bolum addBolum(@RequestBody Bolum bolum) {
+        return bolumService.addBolum(bolum);
+    }
+
+    @PutMapping("/{id}")
+    public Bolum updateBolum(@PathVariable Long id, @RequestBody Bolum bolum) {
+        return bolumService.updateBolum(id, bolum);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBolum(@PathVariable Long id) {
+        bolumService.deleteBolum(id);
+    }
+
 }

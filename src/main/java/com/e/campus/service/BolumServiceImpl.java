@@ -8,12 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BolumServiceImpl implements BolumService{
+public class BolumServiceImpl implements BolumService {
 
     private final BolumRepository bolumRepository;
 
 
     public BolumServiceImpl(BolumRepository bolumRepository) {
+        super();
         this.bolumRepository = bolumRepository;
     }
 
@@ -30,5 +31,30 @@ public class BolumServiceImpl implements BolumService{
 
     public Optional<Bolum> findBlumByID(Long id) {
         return  bolumRepository.findById(id);
+    }
+
+    @Override
+    public List<Bolum> getAllBolumler() {
+        return null;
+    }
+
+    @Override
+    public Bolum getBolumById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Bolum addBolum(Bolum bolum) {
+        return null;
+    }
+
+    @Override
+    public Bolum updateBolum(Long id, Bolum bolum) {
+        return null;
+    }
+
+    @Override
+    public void deleteBolum(Long id) {
+
     }
 }

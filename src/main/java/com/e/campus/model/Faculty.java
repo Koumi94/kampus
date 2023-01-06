@@ -8,8 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 
 public  class Faculty {
     private @Id
