@@ -19,12 +19,12 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public List<Faculty> getAllFaculties() {
-        return null;
+        return facultyRepository.findAll();
     }
 
     @Override
-    public Faculty getFacultyById(Long id) {
-        return null;
+    public Optional<Faculty> getFacultyById(Long id) {
+        return facultyRepository.findById(id);
     }
 
     public Faculty addFaculty(Faculty faculty) {

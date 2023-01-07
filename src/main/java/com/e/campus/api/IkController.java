@@ -3,33 +3,45 @@ package com.e.campus.api;
 
 import com.e.campus.model.IK;
 import com.e.campus.service.IkService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/ik/")
+@RequestMapping("/iks")
 public class IkController {
-    private IkService ikService;
+
+    private final IkService ikService;
 
     public IkController(IkService ikService) {
         this.ikService = ikService;
     }
-    @GetMapping()
-    public List<IK> getAllIk(){
+
+
+    @GetMapping
+    public List<IK> getAllIk() {
         return ikService.getAllIk();
     }
-    @GetMapping("/addik")
-    public IK addIk(@RequestBody IK ik){
-        return  ikService.addIk(ik);
+
+    @GetMapping("/ik/{id}")
+    public Optional<IK> getIkById(@PathVariable Long id) {
+        return ikService.getIkById(id);
     }
 
-    @GetMapping("/{id}")
-    public String findByID(@PathVariable String id){
-        return ikService.findByID(Long.valueOf(id)).toString();
+    @PostMapping
+    public IK addIk(@RequestBody IK ik) {
+        return ikService.addIk(ik);
     }
+
+    @PutMapping("/ik/{id}")
+    public IK updateIk(@PathVariable Long id, @RequestBody IK ik) {
+        return ikService.updateIk(id, ik);
+    }
+
+    @DeleteMapping("/ik/{id}")
+    public void deleteIk(@PathVariable Long id) {
+        ikService.deleteIk(id);
+    }
+
 }

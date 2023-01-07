@@ -35,7 +35,7 @@ public class BolumServiceImpl implements BolumService {
 
     @Override
     public List<Bolum> getAllBolumler() {
-        return null;
+        return bolumRepository.findAll();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BolumServiceImpl implements BolumService {
 
     @Override
     public Bolum addBolum(Bolum bolum) {
-        return null;
+        return bolumRepository.save(bolum);
     }
 
     @Override

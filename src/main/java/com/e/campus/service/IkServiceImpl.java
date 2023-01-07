@@ -20,7 +20,19 @@ public class IkServiceImpl implements IkService{
 
     public IK addIk(IK ik) {
         return ikRepository.save(ik);
-    };
+    }
+
+    @Override
+    public IK updateIk(Long id, IK ik) {
+        return null;
+    }
+
+    @Override
+    public void deleteIk(Long id) {
+
+    }
+
+    ;
 
 
     public Optional<IK> findByID(Long id) {
@@ -29,5 +41,10 @@ public class IkServiceImpl implements IkService{
 
     public List<IK> getAllIk() {
         return ikRepository.findAll();
+    }
+
+    @Override
+    public Optional<IK> getIkById(Long id) {
+        return Optional.empty();
     }
 }

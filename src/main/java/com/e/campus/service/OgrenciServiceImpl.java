@@ -2,30 +2,55 @@ package com.e.campus.service;
 
 import com.e.campus.model.Ogrenci;
 import com.e.campus.repository.OgrenciRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-@Transactional
 public class OgrenciServiceImpl implements OgrenciService{
 
-
     private  final OgrenciRepository ogrenciRepository;
+
 
 
     public OgrenciServiceImpl(OgrenciRepository ogrenciRepository) {
         this.ogrenciRepository = ogrenciRepository;
     }
 
-    public Ogrenci addOgrenci(Ogrenci ogrenci) {
-        this.ogrenciRepository.save(ogrenci);
-        return ogrenci;
-    };
-    public String findByID(String id) {
-        this.ogrenciRepository.findById(id);
-        return (id);
+    public Ogrenci addIk(Ogrenci ogrenci) {
+        return ogrenciRepository.save(ogrenci);
+    }
+
+    @Override
+    public Ogrenci updateOgrenci(Long id, Ogrenci ogrenci) {
+        return null;
+    }
+
+    @Override
+    public void deleteOgrenci(Long id) {
+
+    }
+
+    ;
+
+
+    public Optional<Ogrenci> findByID(Long id) {
+        return ogrenciRepository.findById(id);
+    }
+
+    public List<Ogrenci> getAllOgrenci() {
+        return ogrenciRepository.findAll();
+    }
+
+    @Override
+    public Optional<Ogrenci> getOgrenciById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Ogrenci addOgrenci(Ogrenci bolum) {
+        return null;
     }
 }
+

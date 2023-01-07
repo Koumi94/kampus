@@ -5,6 +5,7 @@ import com.e.campus.service.FacultyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/faculties")
@@ -22,14 +23,16 @@ public class FacultyController {
     }
 
     @GetMapping("/faculty/{id}")
-    public Faculty getFacultyById(@PathVariable Long id) {
+    public Optional<Faculty> getFacultyById(@PathVariable Long id) {
         return facultyService.getFacultyById(id);
     }
 
-    @PostMapping
+    @PostMapping()
     public Faculty addFaculty(@RequestBody Faculty faculty) {
         return facultyService.addFaculty(faculty);
     }
+
+
 
     @PutMapping("/faculty/{id}")
     public Faculty updateFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {

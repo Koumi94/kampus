@@ -22,7 +22,7 @@ public class BolumController {
         return bolumService.getAllBolumler();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/bolum/{id}")
     public Bolum getBolumById(@PathVariable Long id) {
         return bolumService.getBolumById(id);
     }
@@ -32,12 +32,12 @@ public class BolumController {
         return bolumService.addBolum(bolum);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/bolum/{id}")
     public Bolum updateBolum(@PathVariable Long id, @RequestBody Bolum bolum) {
         return bolumService.updateBolum(id, bolum);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/bolum/{id}")
     public void deleteBolum(@PathVariable Long id) {
         bolumService.deleteBolum(id);
     }
