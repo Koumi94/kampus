@@ -18,25 +18,19 @@ public class OgrenciServiceImpl implements OgrenciService{
         this.ogrenciRepository = ogrenciRepository;
     }
 
-    public Ogrenci addIk(Ogrenci ogrenci) {
+    @Override
+    public Ogrenci addOgrenci(Ogrenci ogrenci) {
         return ogrenciRepository.save(ogrenci);
     }
 
     @Override
     public Ogrenci updateOgrenci(Long id, Ogrenci ogrenci) {
-        return null;
+        return ogrenciRepository.save(ogrenci);
     }
 
     @Override
     public void deleteOgrenci(Long id) {
 
-    }
-
-    ;
-
-
-    public Optional<Ogrenci> findByID(Long id) {
-        return ogrenciRepository.findById(id);
     }
 
     public List<Ogrenci> getAllOgrenci() {
@@ -45,12 +39,8 @@ public class OgrenciServiceImpl implements OgrenciService{
 
     @Override
     public Optional<Ogrenci> getOgrenciById(Long id) {
-        return Optional.empty();
+        return ogrenciRepository.findById(id);
     }
 
-    @Override
-    public Ogrenci addOgrenci(Ogrenci bolum) {
-        return null;
-    }
 }
 

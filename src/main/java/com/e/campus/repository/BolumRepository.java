@@ -12,4 +12,5 @@ import java.util.List;
 public interface BolumRepository extends JpaRepository<Bolum , Long > {
 
 
+
 }

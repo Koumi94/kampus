@@ -2,6 +2,7 @@ package com.e.campus.api;
 
 import com.e.campus.model.Faculty;
 import com.e.campus.service.FacultyService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,9 +40,9 @@ public class FacultyController {
         return facultyService.updateFaculty(id, faculty);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteFaculty(@PathVariable Long id) {
-        facultyService.deleteFaculty(id);
+    @DeleteMapping("/faculty/{id}")
+    public String deleteFaculty(@PathVariable Long id) {
+       return "succeful";
     }
 }
 

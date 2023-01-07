@@ -17,17 +17,18 @@ public interface InstituteService {
 
 
 
-    public List<Institute> getAllInstitute() ;
+     List<Institute> getAllInstitute() ;
 
 
-    public Institute addInstitute(Institute institute) ;
+     Institute addInstitute(Institute institute) ;
 
 
-    public Institute findInstituteByID(Long id) ;
+     Institute findInstituteByID(Long id) ;
 
-    Optional<IK> getInstituteById(Long id);
+    Institute getInstituteById(Long id);
 
-    IK updateInstitute(Long id, IK ik);
+    Institute updateInstitute(Long id, Institute institute);
 
     void deleteInstitute(Long id);
+
 }

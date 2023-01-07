@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface OgrenciService {
     List<Ogrenci> getAllOgrenci();
     Optional<Ogrenci> getOgrenciById(Long id);
-    Ogrenci addOgrenci(Ogrenci bolum);
-    Ogrenci updateOgrenci(Long id, Ogrenci bolum);
+    Ogrenci addOgrenci(Ogrenci ogrenci);
+    Ogrenci updateOgrenci(Long id, Ogrenci ogrenci);
     void deleteOgrenci(Long id);
 }

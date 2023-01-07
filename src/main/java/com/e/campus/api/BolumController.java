@@ -27,7 +27,7 @@ public class BolumController {
         return bolumService.getBolumById(id);
     }
 
-    @PostMapping
+    @PostMapping("/addbolum")
     public Bolum addBolum(@RequestBody Bolum bolum) {
         return bolumService.addBolum(bolum);
     }

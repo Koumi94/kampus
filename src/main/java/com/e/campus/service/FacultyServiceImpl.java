@@ -33,12 +33,13 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public Faculty updateFaculty(Long id, Faculty faculty) {
-        return null;
+        return facultyRepository.save(faculty);
     }
 
     @Override
-    public void deleteFaculty(Long id) {
+    public Faculty deleteFaculty(Long id) {
 
+        return null;
     }
 
     ;

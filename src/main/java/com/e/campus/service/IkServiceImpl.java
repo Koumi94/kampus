@@ -18,13 +18,14 @@ public class IkServiceImpl implements IkService{
         this.ikRepository = ikRepository;
     }
 
+    @Override
     public IK addIk(IK ik) {
         return ikRepository.save(ik);
     }
 
     @Override
     public IK updateIk(Long id, IK ik) {
-        return null;
+        return ikRepository.save(ik);
     }
 
     @Override
@@ -32,13 +33,7 @@ public class IkServiceImpl implements IkService{
 
     }
 
-    ;
-
-
-    public Optional<IK> findByID(Long id) {
-        return ikRepository.findById(id);
-    }
-
+    @Override
     public List<IK> getAllIk() {
         return ikRepository.findAll();
     }

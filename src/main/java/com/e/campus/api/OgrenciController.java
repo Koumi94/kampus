@@ -33,8 +33,8 @@ public class OgrenciController {
     }
 
     @PostMapping
-    public OgrenciService addOgrenci(@RequestBody Ogrenci ogrenci ) {
-        return (OgrenciService) ogrenciService.addOgrenci(ogrenci);
+    public Ogrenci addOgrenci(@RequestBody Ogrenci ogrenci ) {
+        return  ogrenciService.addOgrenci(ogrenci);
     }
 
     @PutMapping("/ogrenci/{id}")

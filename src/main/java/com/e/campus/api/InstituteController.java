@@ -25,18 +25,18 @@ public class InstituteController {
     }
 
     @GetMapping("/institute/{id}")
-    public Optional<IK> getIkById(@PathVariable Long id) {
+    public Institute getIkById(@PathVariable Long id) {
         return instituteService.getInstituteById(id);
     }
 
-    @PostMapping
-    public InstituteService addInstitute(@RequestBody Institute institute ) {
-        return (InstituteService) instituteService.addInstitute(institute);
+    @PostMapping("/addinstituty")
+    public Institute addInstitute(@RequestBody Institute institute ) {
+        return  instituteService.addInstitute(institute);
     }
 
     @PutMapping("/institute/{id}")
-    public IK updateIk(@PathVariable Long id, @RequestBody IK ik) {
-        return instituteService.updateInstitute(id, ik);
+    public Institute updateInstitute(@PathVariable Long id, @RequestBody Institute institute) {
+        return instituteService.updateInstitute(id, institute);
     }
 
     @DeleteMapping("/institute/{id}")

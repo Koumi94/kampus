@@ -18,20 +18,18 @@ public class BolumServiceImpl implements BolumService {
         this.bolumRepository = bolumRepository;
     }
 
-    public List<Bolum> getAllBlum() {
+    //public List<Bolum> getAllBlum() {
 
-        return bolumRepository.findAll();
+     //   return bolumRepository.findAll();
 
-    };
+    //};
 
-    public Bolum addBlum(Bolum bolum) {
-        return  bolumRepository.save(bolum);
-    };
+    //public Bolum addBlum(Bolum bolum) {
+    //    return  bolumRepository.save(bolum);
+   // };
 
 
-    public Optional<Bolum> findBlumByID(Long id) {
-        return  bolumRepository.findById(id);
-    }
+
 
     @Override
     public List<Bolum> getAllBolumler() {
@@ -40,7 +38,7 @@ public class BolumServiceImpl implements BolumService {
 
     @Override
     public Bolum getBolumById(Long id) {
-        return null;
+        return bolumRepository.getById(id);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class BolumServiceImpl implements BolumService {
 
     @Override
     public Bolum updateBolum(Long id, Bolum bolum) {
-        return null;
+        return bolumRepository.save(bolum);
     }
 
     @Override

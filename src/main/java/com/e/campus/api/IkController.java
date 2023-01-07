@@ -29,7 +29,7 @@ public class IkController {
         return ikService.getIkById(id);
     }
 
-    @PostMapping
+    @PostMapping("/addik")
     public IK addIk(@RequestBody IK ik) {
         return ikService.addIk(ik);
     }

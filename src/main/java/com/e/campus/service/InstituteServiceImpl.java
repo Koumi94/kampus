@@ -24,24 +24,26 @@ public class InstituteServiceImpl implements InstituteService{
 
     };
 
+    @Override
     public Institute addInstitute(Institute institute) {
         return  instituteRepository.save(institute);
     };
 
 
+    @Override
     public Institute findInstituteByID(Long id) {
         Institute institute =instituteRepository.findInstituteById(id);
         return  institute;
     }
 
     @Override
-    public Optional<IK> getInstituteById(Long id) {
-        return Optional.empty();
+    public Institute getInstituteById(Long id) {
+        return instituteRepository.getById(id);
     }
 
     @Override
-    public IK updateInstitute(Long id, IK ik) {
-        return null;
+    public Institute updateInstitute(Long id, Institute institute) {
+        return instituteRepository.save(institute);
     }
 
     @Override

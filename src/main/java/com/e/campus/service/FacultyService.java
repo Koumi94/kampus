@@ -10,5 +10,5 @@ public interface FacultyService {
     Optional<Faculty> getFacultyById(Long id);
     Faculty addFaculty(Faculty faculty);
     Faculty updateFaculty(Long id, Faculty faculty);
-    void deleteFaculty(Long id);
+    Faculty deleteFaculty(Long id);
 }
