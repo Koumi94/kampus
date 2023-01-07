@@ -1,12 +1,10 @@
 package com.e.campus.api;
 
-import com.e.campus.model.IK;
 import com.e.campus.model.Institute;
 import com.e.campus.service.InstituteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/institutes")
@@ -25,7 +23,7 @@ public class InstituteController {
     }
 
     @GetMapping("/institute/{id}")
-    public Institute getIkById(@PathVariable Long id) {
+    public Institute getInstituteById(@PathVariable Long id) {
         return instituteService.getInstituteById(id);
     }
 
@@ -36,12 +34,14 @@ public class InstituteController {
 
     @PutMapping("/institute/{id}")
     public Institute updateInstitute(@PathVariable Long id, @RequestBody Institute institute) {
-        return instituteService.updateInstitute(id, institute);
+        Institute updateInstitute =instituteService.updateInstitute(id, institute);
+        return updateInstitute;
     }
 
     @DeleteMapping("/institute/{id}")
-    public void deleteInstitute(@PathVariable Long id) {
+    public String deleteInstitute(@PathVariable Long id) {
         instituteService.deleteInstitute(id);
+        return "messqge suprimer";
     }
 
 }

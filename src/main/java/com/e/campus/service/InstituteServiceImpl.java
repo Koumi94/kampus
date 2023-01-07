@@ -1,23 +1,21 @@
 package com.e.campus.service;
 
-import com.e.campus.model.IK;
 import com.e.campus.model.Institute;
 import com.e.campus.repository.InstituteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InstituteServiceImpl implements InstituteService{
     private final InstituteRepository instituteRepository;
-
 
     public InstituteServiceImpl(InstituteRepository instituteRepository) {
         this.instituteRepository = instituteRepository;
     }
 
 
+    @Override
     public List<Institute> getAllInstitute() {
 
         return instituteRepository.findAll();
@@ -43,11 +41,12 @@ public class InstituteServiceImpl implements InstituteService{
 
     @Override
     public Institute updateInstitute(Long id, Institute institute) {
-        return instituteRepository.save(institute);
+        Institute updateInstitute = instituteRepository.save(institute);
+        return updateInstitute;
     }
 
     @Override
-    public void deleteInstitute(Long id) {
-
+    public String deleteInstitute(Long id) {
+        return "supprımer";
     }
 }
