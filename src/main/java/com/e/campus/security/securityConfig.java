@@ -79,7 +79,7 @@ public class securityConfig  {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER")
                 .antMatchers(POST, "/api/user/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
-                .antMatchers(POST, "/api/user/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
+                .antMatchers(POST, "/faculties/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
                 ;
         return http.build();
 
