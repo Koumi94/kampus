@@ -38,7 +38,6 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public Faculty deleteFaculty(Long id) {
-
         return null;
     }
 

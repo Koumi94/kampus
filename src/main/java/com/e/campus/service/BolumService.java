@@ -9,5 +9,5 @@ public interface BolumService {
     Bolum getBolumById(Long id);
     Bolum addBolum(Bolum bolum);
     Bolum updateBolum(Long id, Bolum bolum);
-    void deleteBolum(Long id);
+    Bolum deleteBolum(Long id);
 }

@@ -38,8 +38,8 @@ public class BolumController {
     }
 
     @DeleteMapping("/bolum/{id}")
-    public void deleteBolum(@PathVariable Long id) {
-        bolumService.deleteBolum(id);
+    public String deleteBolum(@PathVariable Long id) {
+        return "succesul";
     }
 
 }

@@ -39,9 +39,9 @@ public class IkController {
         return ikService.updateIk(id, ik);
     }
 
-    @DeleteMapping("/ik/{id}")
-    public void deleteIk(@PathVariable Long id) {
-        ikService.deleteIk(id);
+    @DeleteMapping("/deleteik/{id}")
+    public String deleteIk(@PathVariable Long id) {
+        return "succeful";
     }
 
 }

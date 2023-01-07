@@ -10,4 +10,5 @@ import java.util.List;
 public interface IkRepository extends JpaRepository<IK, Long > {
 
 
+
 }

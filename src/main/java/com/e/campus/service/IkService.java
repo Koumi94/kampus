@@ -13,5 +13,5 @@ public interface IkService {
     Optional<IK> getIkById(Long id);
     IK addIk(IK ik);
     IK updateIk(Long id, IK ik);
-    void deleteIk(Long id);
+    IK deleteIk(Long id);
 }

@@ -29,8 +29,8 @@ public class IkServiceImpl implements IkService{
     }
 
     @Override
-    public void deleteIk(Long id) {
-
+    public IK deleteIk(Long id) {
+       return null;
     }
 
     @Override

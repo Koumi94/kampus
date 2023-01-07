@@ -52,7 +52,7 @@ public class BolumServiceImpl implements BolumService {
     }
 
     @Override
-    public void deleteBolum(Long id) {
-
+    public Bolum  deleteBolum(Long id) {
+        return null;
     }
 }

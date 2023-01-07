@@ -12,9 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Ogrenci {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private @Id
+    @GeneratedValue long id ;
 
     @Column(unique = true, nullable = false)
     private String name;
