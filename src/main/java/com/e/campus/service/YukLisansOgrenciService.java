@@ -1,6 +1,5 @@
 package com.e.campus.service;
 
-import com.e.campus.model.Institute;
 import com.e.campus.model.YukseklisansOgrenci;
 import com.e.campus.repository.InstituteRepository;
 import com.e.campus.repository.YukLisansOgrenciRepository;
@@ -13,7 +12,25 @@ import java.util.List;
 @Transactional
 public interface YukLisansOgrenciService {
 
-    public YukseklisansOgrenci addInstituteOgrenci(YukseklisansOgrenci yukseklisansOgrenci);
 
-    public List<YukseklisansOgrenci> getAllInstituteOgrenci();
+
+    public List<YukseklisansOgrenci> getAllYukLisansOgrenci();
+
+
+    YukseklisansOgrenci getYukLisansOgrenciById(Long id);
+
+
+
+    YukseklisansOgrenci updateYukLisansOgrenci(Long id, YukseklisansOgrenci yukLisansOgrenci);
+
+    void deleteYukLisansOgrenci(Long id);
+
+
+    YukseklisansOgrenci addBolum(YukseklisansOgrenci yukseklisansOgrenci);
+
+    YukseklisansOgrenci updateYukseklisansOgrenci(Long id, YukseklisansOgrenci yukseklisansOgrenci);
+
+    YukseklisansOgrenci deleteYukseklisansOgrenci(Long id);
+
+    YukseklisansOgrenci addYukLisansOgrenci(YukseklisansOgrenci yukLisansOgrenci);
 }

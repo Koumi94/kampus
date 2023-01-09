@@ -1,35 +1,52 @@
 package com.e.campus.api;
 
-import com.e.campus.model.Institute;
+
 import com.e.campus.model.YukseklisansOgrenci;
-import com.e.campus.service.InstituteService;
+
+
 import com.e.campus.service.YukLisansOgrenciService;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/master_degree/")
-@RequiredArgsConstructor
+@RequestMapping("/YukLisansOgrenci")
 public class YukLisansOgrenciController {
-    private YukLisansOgrenciService yukLisansOgrenciService;
+
+    private final YukLisansOgrenciService yukLisansOgrenciService;
 
     public YukLisansOgrenciController(YukLisansOgrenciService yukLisansOgrenciService) {
         this.yukLisansOgrenciService = yukLisansOgrenciService;
     }
 
-    @GetMapping()
-    public List<YukseklisansOgrenci> getAllInstituteOgrenci(){
-        return yukLisansOgrenciService.getAllInstituteOgrenci();
+
+    @GetMapping
+    public List<YukseklisansOgrenci> getAllYukLisansOgrenci() {
+        return yukLisansOgrenciService.getAllYukLisansOgrenci();
     }
-    @GetMapping("/addinstituteogrenci")
-    public YukseklisansOgrenci addInstituteOgrenci(@RequestBody YukseklisansOgrenci yukseklisansOgrenci){
-        return  yukLisansOgrenciService.addInstituteOgrenci(yukseklisansOgrenci);
+
+    @GetMapping("/YukLisansOgrenci/{id}")
+    public YukseklisansOgrenci getYukLisansOgrenciById(@PathVariable Long id) {
+        return yukLisansOgrenciService.getYukLisansOgrenciById(id);
     }
+
+    @PostMapping("/addYukLisansOgrenci")
+    public YukseklisansOgrenci addYukLisansOgrenci(@RequestBody YukseklisansOgrenci yukLisansOgrenci ) {
+        return  yukLisansOgrenciService.addYukLisansOgrenci(yukLisansOgrenci);
+    }
+
+
+
+    @PutMapping("/addYukLisansOgrenci/{id}")
+    public YukseklisansOgrenci updateYukLisansOgrenci(@PathVariable Long id, @RequestBody YukseklisansOgrenci yukseklisansOgrenci) {
+        return yukLisansOgrenciService.updateYukLisansOgrenci(id, yukseklisansOgrenci);
+    }
+
+    @DeleteMapping("/YukLisansOgrenci/{id}")
+    public String deleteYukLisansOgrenci(@PathVariable Long id) {
+        yukLisansOgrenciService.deleteYukLisansOgrenci(id);
+        return "messqge suprimer";
+    }
+
 }
+
