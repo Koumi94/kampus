@@ -26,11 +26,5 @@ public interface YukLisansOgrenciService {
     void deleteYukLisansOgrenci(Long id);
 
 
-    YukseklisansOgrenci addBolum(YukseklisansOgrenci yukseklisansOgrenci);
-
-    YukseklisansOgrenci updateYukseklisansOgrenci(Long id, YukseklisansOgrenci yukseklisansOgrenci);
-
-    YukseklisansOgrenci deleteYukseklisansOgrenci(Long id);
-
     YukseklisansOgrenci addYukLisansOgrenci(YukseklisansOgrenci yukLisansOgrenci);
 }

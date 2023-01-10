@@ -1,13 +1,7 @@
 package com.e.campus.api;
-
-import com.e.campus.model.IK;
-import com.e.campus.model.Institute;
 import com.e.campus.model.Ogrenci;
-import com.e.campus.service.InstituteService;
 import com.e.campus.service.OgrenciService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 

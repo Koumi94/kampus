@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public abstract class YukLisansOgrenciServiceImpl implements YukLisansOgrenciService{
+public  class YukLisansOgrenciServiceImpl implements YukLisansOgrenciService{
 
     private YukLisansOgrenciRepository yukLisansOgrenciRepository;
 
@@ -27,17 +27,20 @@ public abstract class YukLisansOgrenciServiceImpl implements YukLisansOgrenciSer
     }
 
     @Override
-    public YukseklisansOgrenci addBolum(YukseklisansOgrenci yukseklisansOgrenci) {
+    public YukseklisansOgrenci updateYukLisansOgrenci(Long id, YukseklisansOgrenci yukLisansOgrenci) {
         return null;
     }
 
     @Override
-    public YukseklisansOgrenci updateYukseklisansOgrenci(Long id, YukseklisansOgrenci yukseklisansOgrenci) {
+    public void deleteYukLisansOgrenci(Long id) {
+
+    }
+
+
+    @Override
+    public YukseklisansOgrenci addYukLisansOgrenci(YukseklisansOgrenci yukLisansOgrenci) {
         return null;
     }
 
-    @Override
-    public YukseklisansOgrenci deleteYukseklisansOgrenci(Long id) {
-        return null;
-    }
+
 }
