@@ -24,17 +24,17 @@ public class StaffController {
         return staffService.getAllStaff();
     }
 
-    @GetMapping("/ogrenci/{id}")
+    @GetMapping("/staff/{id}")
     public Optional<Staff> getStaffById(@PathVariable Long id) {
         return staffService.getStaffById(id);
     }
 
-    @PostMapping
+    @PostMapping("/addstaff")
     public Staff addOgrenci(@RequestBody Staff staff ) {
         return  staffService.addStaff(staff);
     }
 
-    @PutMapping("/ogrenci/{id}")
+    @PutMapping("/staff/{id}")
     public Staff updateStaff(@PathVariable Long id, @RequestBody Staff staff) {
         return staffService.updateStaff(id, staff);
     }
