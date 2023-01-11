@@ -2,6 +2,7 @@ package com.e.campus.api;
 
 import com.e.campus.model.Bolum;
 
+import com.e.campus.model.Faculty;
 import com.e.campus.service.BolumService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class BolumController {
     }
 
     @GetMapping("/bolum/{id}")
-    public List<Bolum> getBolumById(@PathVariable Long id) {
+    public Optional<Bolum> getBolumById(@PathVariable Long id) {
         return bolumService.getBolumById(id);
     }
 

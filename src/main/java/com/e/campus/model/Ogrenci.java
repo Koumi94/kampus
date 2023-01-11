@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,20 +24,33 @@ public class Ogrenci {
 
     private String email;
     private LocalDateTime createAt;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "OgrenciIsleri_id")
 
+
+    @ManyToOne
+    @JoinColumn(name = "ogrenci_id")
     private Ogrenci ogrenci;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ogrenci_course", joinColumns = @JoinColumn(name = "ogrenci_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> courses;
 
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
 
-    public Ogrenci (String name, Integer identity,String tel, String email){
+    public void removeCourse(Course course) {
+        courses.remove(course);
+    }
+
+    public Ogrenci(String name, Integer identity,String tel, String email) {
         this.name = name;
         this.identity = identity;
         this.tel = tel;
         this.email = email;
         this.createAt = LocalDateTime.now();
+        this.courses = new ArrayList<>();
     }
+
 
 
 

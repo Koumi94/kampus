@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/course")
 public class CourseController {
     private final CourseService courseService;
 
@@ -22,22 +22,22 @@ public class CourseController {
         return courseService.getAllCourse();
     }
 
-    @GetMapping("/course/{id}")
+    @GetMapping("/course/{course_Id}")
     public Optional<Course> getCourseById(@PathVariable Long id) {
         return courseService.getCourseById(id);
     }
 
-    @PostMapping("/addcourse")
+    @PostMapping
     public Course addCourse(@RequestBody Course course) {
         return courseService.addCourse(course);
     }
 
-    @PutMapping("/course/{id}")
+    @PutMapping("/course/{course_Id}")
     public Course updateCourse(@PathVariable Long id, @RequestBody Course course) {
         return courseService.updateCourse(id, course);
     }
 
-    @DeleteMapping("/course/{id}")
+    @DeleteMapping("/course/{course_Id}")
     public String deleteCourse(@PathVariable Long id) {
         return "succesul";
     }

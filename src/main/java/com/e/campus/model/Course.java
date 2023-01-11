@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -21,6 +22,15 @@ public class Course {
     private Integer courseNum;
 
     @GeneratedValue private LocalDateTime createAt;
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Ogrenci> ogrencis;
+
+    public List<Ogrenci> getOgrencis() {
+        return ogrencis;
+    }
+
+
 
     public Course(String name, Integer courseNum ) {
         this.name = name;
