@@ -59,4 +59,6 @@ public class OgrenciController {
         return new ResponseEntity<>("Course added successfully to student", HttpStatus.OK);
     }
 
+
+
 }
