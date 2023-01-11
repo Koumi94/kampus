@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BolumService {
     List<Bolum> getAllBolumler();
-    Bolum getBolumById(Long id);
+    Object getBolumById(Long id);
     Bolum addBolum(Bolum bolum);
     Bolum updateBolum(Long id, Bolum bolum);
     Bolum deleteBolum(Long id);

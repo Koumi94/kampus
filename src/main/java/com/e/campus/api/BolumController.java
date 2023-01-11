@@ -6,6 +6,7 @@ import com.e.campus.service.BolumService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/bolumler")
@@ -23,7 +24,7 @@ public class BolumController {
     }
 
     @GetMapping("/bolum/{id}")
-    public Bolum getBolumById(@PathVariable Long id) {
+    public List<Bolum> getBolumById(@PathVariable Long id) {
         return bolumService.getBolumById(id);
     }
 

@@ -22,22 +22,22 @@ public class StudentAffServiceImpl implements StudentAffService{
 
     @Override
     public List<StudentAffairs> getAllStudentAffairs() {
-        return null;
+        return studentAffairsRepository.findAll();
     }
 
     @Override
     public Optional<StudentAffairs> getStudentAffairsById(Long id) {
-        return Optional.empty();
+        return studentAffairsRepository.findById(id);
     }
 
     @Override
     public StudentAffairs addStudentAffairs(StudentAffairs studentAffairs) {
-        return null;
+        return studentAffairsRepository.save(studentAffairs);
     }
 
     @Override
     public StudentAffairs updateStudentAffairs(Long id, StudentAffairs studentAffairs) {
-        return null;
+        return studentAffairsRepository.save(studentAffairs);
     }
 
     @Override

@@ -10,18 +10,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Table(name = "course")
 @AllArgsConstructor
 public class Course {
 
-    private @Id
-    @GeneratedValue long id;
+     @Id
+    @GeneratedValue private long id;
 
     private String name;
+    private Integer courseNum;
 
-    private LocalDateTime createAt;
+    @GeneratedValue private LocalDateTime createAt;
 
-    public Course(String name) {
+    public Course(String name, Integer courseNum ) {
         this.name = name;
+        this.courseNum = courseNum;
         this.createAt = LocalDateTime.now();
     }
 

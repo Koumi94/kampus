@@ -5,6 +5,7 @@ import com.e.campus.repository.BolumRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BolumServiceImpl implements BolumService {
@@ -17,18 +18,6 @@ public class BolumServiceImpl implements BolumService {
         this.bolumRepository = bolumRepository;
     }
 
-    //public List<Bolum> getAllBlum() {
-
-     //   return bolumRepository.findAll();
-
-    //};
-
-    //public Bolum addBlum(Bolum bolum) {
-    //    return  bolumRepository.save(bolum);
-   // };
-
-
-
 
     @Override
     public List<Bolum> getAllBolumler() {
@@ -36,8 +25,8 @@ public class BolumServiceImpl implements BolumService {
     }
 
     @Override
-    public Bolum getBolumById(Long id) {
-        return bolumRepository.getById(id);
+    public Optional<Bolum> getBolumById(Long id) {
+        return bolumRepository.findById(id);
     }
 
     @Override
