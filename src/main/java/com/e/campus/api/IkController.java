@@ -25,13 +25,13 @@ public class IkController {
     @Autowired
     private ContractService contractService;
 
-    @GetMapping("/employees")
+    @GetMapping("/staffs")
     public ResponseEntity<List<Staff>> getAllStaff() {
         List<Staff> staffs = staffService.getAllStaff();
         return new ResponseEntity<>(staffs, HttpStatus.OK);
     }
 
-    @GetMapping("/employees/{employeeId}")
+    @GetMapping("/staffs/{staff_id}")
     public ResponseEntity<Staff> getStaffById(@PathVariable Long staff_id) {
         Optional<Staff> staff = staffService.getStaffById(staff_id);
         if(!staff.isPresent()){
@@ -40,19 +40,19 @@ public class IkController {
         return new ResponseEntity<>(staff.get(), HttpStatus.OK);
     }
 
-    @PostMapping("/employees")
+    @PostMapping("/staffs")
     public ResponseEntity<Staff> addStaff(@RequestBody Staff staff) {
         staffService.addStaff(staff);
         return new ResponseEntity<>(staff, HttpStatus.CREATED);
     }
 
-    @PutMapping("/employees/{employeeId}")
+    @PutMapping("/staffs/{staff_id}")
     public ResponseEntity<Staff> updateStaff(@PathVariable Long staff_id, @RequestBody Staff staff) {
         staffService.updateStaff(staff_id, staff);
         return new ResponseEntity<>(staff, HttpStatus.OK);
     }
 
-    @DeleteMapping("/employees/{employeeId}")
+    @DeleteMapping("/staffs/{staff_id}")
     public ResponseEntity<Void> deleteStaff(@PathVariable Long staff_id) {
         staffService.deleteStaff(staff_id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -64,7 +64,7 @@ public class IkController {
         return new ResponseEntity<>(contract, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/contracts/{contractId}")
+    @DeleteMapping("/contracts/{contract_Id}")
     public ResponseEntity<Void> deleteContract(@PathVariable Long contractId) {
         contractService.deleteContract(contractId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

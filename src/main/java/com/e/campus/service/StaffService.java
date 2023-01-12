@@ -20,13 +20,15 @@ public class StaffService {
             return staffRepository.findById(staff_Id);
         }
 
-        public void addStaff(Staff staff) {
+        public Staff addStaff(Staff staff) {
             staffRepository.save(staff);
+            return staff;
         }
 
-        public void updateStaff(Long staff_Id, Staff staff) {
+        public Staff updateStaff(Long staff_Id, Staff staff) {
             staff.setId(staff_Id);
             staffRepository.save(staff);
+            return staff;
         }
 
         public void deleteStaff(Long staff_Id) {
