@@ -26,9 +26,7 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Ogrenci> ogrencis;
 
-    public List<Ogrenci> getOgrencis() {
-        return ogrencis;
-    }
+
 
 
 

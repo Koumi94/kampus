@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/faculty-management")
+@RequestMapping("/faculties")
 public class FacultyController {
     @Autowired
     private FacultyService facultyService;
