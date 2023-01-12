@@ -1,12 +1,37 @@
 package com.e.campus.service;
 import com.e.campus.model.Staff;
+import com.e.campus.repository.StaffRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
+@Service
+public class StaffService {
 
-public interface StaffService {
-    List<Staff> getAllStaff();
-    Optional<Staff> getStaffById(Long id);
-    Staff addStaff(Staff staff);
-    Staff updateStaff(Long id, Staff staff);
-    void deleteStaff(Long id);
+        @Autowired
+        private StaffRepository staffRepository;
+
+        public List<Staff> getAllStaff() {
+            return staffRepository.findAll();
+        }
+
+        public Optional<Staff> getStaffById(Long staff_Id) {
+            return staffRepository.findById(staff_Id);
+        }
+
+        public void addStaff(Staff staff) {
+            staffRepository.save(staff);
+        }
+
+        public void updateStaff(Long staff_Id, Staff staff) {
+            staff.setId(staff_Id);
+            staffRepository.save(staff);
+        }
+
+        public void deleteStaff(Long staff_Id) {
+            staffRepository.deleteById(staff_Id);
+        }
+
+
 }

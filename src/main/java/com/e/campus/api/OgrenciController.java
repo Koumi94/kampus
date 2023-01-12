@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/ogrenciler")
+@RequestMapping("/ogrenci-isleri")
 public class OgrenciController {
 
     private final OgrenciService ogrenciService;
@@ -23,40 +23,48 @@ public class OgrenciController {
 
 
     @GetMapping
-    public List<Ogrenci> getAllOgrenci() {
-        return ogrenciService.getAllOgrenci();
+    public ResponseEntity<List<Ogrenci>> getAllOgrenci() {
+        List<Ogrenci> ogrenciler = ogrenciService.getAllOgrenci();
+        return new ResponseEntity<>(ogrenciler, HttpStatus.OK);
     }
 
     @GetMapping("/ogrenci/{ogrenci_id}")
-    public Optional<Ogrenci> getOgrenciById(@PathVariable Long id) {
-        return ogrenciService.getOgrenciById(id);
+    public ResponseEntity<Ogrenci> getOgrenciById(@PathVariable Long id) {
+        Optional<Ogrenci> ogrenci = ogrenciService.getOgrenciById(id);
+        if(!ogrenci.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ogrenci.get(), HttpStatus.OK);
     }
 
     @PostMapping
-    public Ogrenci addOgrenci(@RequestBody Ogrenci ogrenci ) {
-        return  ogrenciService.addOgrenci(ogrenci);
+    public ResponseEntity<Ogrenci> addOgrenci(@RequestBody Ogrenci ogrenci ) {
+          ogrenciService.addOgrenci(ogrenci);
+        return new ResponseEntity<>(ogrenci, HttpStatus.CREATED);
     }
 
     @PutMapping("/ogrenci/{ogrenci_id}")
-    public Ogrenci updateOgrenci(@PathVariable Long id, @RequestBody Ogrenci ogrenci) {
-        return ogrenciService.updateOgrenci(id, ogrenci);
+    public ResponseEntity<Ogrenci> updateOgrenci(@PathVariable Long id, @RequestBody Ogrenci ogrenci) {
+        ogrenciService.updateOgrenci(id, ogrenci);
+        return new ResponseEntity<>(ogrenci, HttpStatus.OK);
     }
 
     @DeleteMapping("/ogrenci/{ogrenci_id}")
-    public void deleteOgrenci(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOgrenci(@PathVariable Long id) {
         ogrenciService.deleteOgrenci(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/ogrenci/{ogrenci_id}/course/{course_Id}")
     public ResponseEntity<String> addCourse(@PathVariable Long ogrenci_id, @PathVariable Long course_Id) {
-        Optional<Ogrenci> student = ogrenciService.getOgrenciById(ogrenci_id);
+        Optional<Ogrenci> ogrenci = ogrenciService.getOgrenciById(ogrenci_id);
         Optional<Course> course = courseService.getCourseById(course_Id);
-        if(!student.isPresent() || !course.isPresent()){
-            return new ResponseEntity<>("Student or course does not exist", HttpStatus.BAD_REQUEST);
+        if(!ogrenci.isPresent() || !course.isPresent()){
+            return new ResponseEntity<>("Öğrenci veya kurs mevcut değil", HttpStatus.BAD_REQUEST);
         }
-        student.get().addCourse(course.get());
-        ogrenciService.updateOgrenci(student.get().getId(),student.get());
-        return new ResponseEntity<>("Course added successfully to student", HttpStatus.OK);
+        ogrenci.get().addCourse(course.get());
+        ogrenciService.updateOgrenci(ogrenci.get().getId(),ogrenci.get());
+        return new ResponseEntity<>("Ders, öğrenciye başarıyla eklendi", HttpStatus.OK);
     }
 
 

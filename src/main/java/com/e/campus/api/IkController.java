@@ -1,8 +1,15 @@
 package com.e.campus.api;
 
 
+import com.e.campus.model.Contract;
 import com.e.campus.model.IK;
+import com.e.campus.model.Staff;
+import com.e.campus.service.ContractService;
 import com.e.campus.service.IkService;
+import com.e.campus.service.StaffService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,36 +19,55 @@ import java.util.Optional;
 @RequestMapping("/iks")
 public class IkController {
 
-    private final IkService ikService;
+    @Autowired
+    private StaffService staffService;
 
-    public IkController(IkService ikService) {
-        this.ikService = ikService;
+    @Autowired
+    private ContractService contractService;
+
+    @GetMapping("/employees")
+    public ResponseEntity<List<Staff>> getAllStaff() {
+        List<Staff> staffs = staffService.getAllStaff();
+        return new ResponseEntity<>(staffs, HttpStatus.OK);
     }
 
-
-    @GetMapping
-    public List<IK> getAllIk() {
-        return ikService.getAllIk();
+    @GetMapping("/employees/{employeeId}")
+    public ResponseEntity<Staff> getStaffById(@PathVariable Long staff_id) {
+        Optional<Staff> staff = staffService.getStaffById(staff_id);
+        if(!staff.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(staff.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/ik/{id}")
-    public Optional<IK> getIkById(@PathVariable Long id) {
-        return ikService.getIkById(id);
+    @PostMapping("/employees")
+    public ResponseEntity<Staff> addStaff(@RequestBody Staff staff) {
+        staffService.addStaff(staff);
+        return new ResponseEntity<>(staff, HttpStatus.CREATED);
     }
 
-    @PostMapping("/addik")
-    public IK addIk(@RequestBody IK ik) {
-        return ikService.addIk(ik);
+    @PutMapping("/employees/{employeeId}")
+    public ResponseEntity<Staff> updateStaff(@PathVariable Long staff_id, @RequestBody Staff staff) {
+        staffService.updateStaff(staff_id, staff);
+        return new ResponseEntity<>(staff, HttpStatus.OK);
     }
 
-    @PutMapping("/ik/{id}")
-    public IK updateIk(@PathVariable Long id, @RequestBody IK ik) {
-        return ikService.updateIk(id, ik);
+    @DeleteMapping("/employees/{employeeId}")
+    public ResponseEntity<Void> deleteStaff(@PathVariable Long staff_id) {
+        staffService.deleteStaff(staff_id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/deleteik/{id}")
-    public String deleteIk(@PathVariable Long id) {
-        return "succeful";
+    @PostMapping("/contracts")
+    public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
+        contractService.createContract(contract);
+        return new ResponseEntity<>(contract, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/contracts/{contractId}")
+    public ResponseEntity<Void> deleteContract(@PathVariable Long contractId) {
+        contractService.deleteContract(contractId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
