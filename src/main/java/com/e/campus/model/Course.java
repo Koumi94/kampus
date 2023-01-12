@@ -41,4 +41,7 @@ public class Course {
     public Course() {
 
     }
+
+    public void setFaculty(Faculty faculty) {
+    }
 }

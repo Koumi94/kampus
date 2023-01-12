@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/ogrenci-isleri")
+@RequestMapping("/ogrenciler")
 public class OgrenciController {
 
     private final OgrenciService ogrenciService;

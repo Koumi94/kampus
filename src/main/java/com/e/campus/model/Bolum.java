@@ -27,4 +27,7 @@ public class Bolum {
     public Bolum() {
 
     }
+
+    public void setFaculty(Faculty faculty) {
+    }
 }
