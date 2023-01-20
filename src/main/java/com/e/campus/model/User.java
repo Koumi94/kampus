@@ -10,6 +10,7 @@ import java.util.Collection;
 @Entity
 @Data // Create getters and setters
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,7 @@ public class User {
     private String email;
 
     private String password;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<UserRole> roles = new ArrayList<>();

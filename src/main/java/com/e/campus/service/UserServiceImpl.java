@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.e.campus.model.User;
 import com.e.campus.model.UserRole;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,7 +28,7 @@ import java.util.List;
 public class UserServiceImpl implements  UserService , UserDetailsService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
 
@@ -53,17 +52,10 @@ public class UserServiceImpl implements  UserService , UserDetailsService {
 
     @Override
     public User saveUser(User user) {
-        log.info("Saving new user {} to the database", user.getName());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-
-    @Override
-    public UserRole saveUserRole(UserRole role) {
-        log.info("Saving new role {} to the database", role.getName());
-        return userRoleRepository.save(role);
-
+       log.info("Saving new user {} to the database", user.getName());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return user;
     }
 
     @Override
@@ -74,18 +66,21 @@ public class UserServiceImpl implements  UserService , UserDetailsService {
         user.getRoles().add(role);
 
     }
-
     @Override
     public User getUser(String username) {
         log.info("fetching role  {} ", username);
         return userRepository.findByUsername(username);
-
     }
-
     @Override
     public List<User> getUsers() {
         log.info("fetching all the Users  {} ");
         return userRepository.findAll();
+    }
+
+    @Override
+    public UserRole saveUserRole(UserRole role) {
+        userRoleRepository.save(role);
+        return role;
     }
 
 

@@ -10,10 +10,11 @@ import java.util.Optional;
 @Service
 public class BolumServiceImpl implements BolumService {
     private final BolumRepository bolumRepository;
+
     public BolumServiceImpl(BolumRepository bolumRepository) {
-        super();
         this.bolumRepository = bolumRepository;
     }
+
     @Override
     public List<Bolum> getAllBolumler() {
         return bolumRepository.findAll();

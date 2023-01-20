@@ -13,13 +13,9 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class UserRole  {
-
-
    @Id
    @GeneratedValue
    private  Long id;
    private  String name;
-
 }

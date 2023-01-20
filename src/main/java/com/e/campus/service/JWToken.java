@@ -1,4 +1,4 @@
-package com.e.campus.security;
+package com.e.campus.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
