@@ -2,7 +2,6 @@ package com.e.campus.security;
 
 
 
-import com.e.campus.filter.CustomAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

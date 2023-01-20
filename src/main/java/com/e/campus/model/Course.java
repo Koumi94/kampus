@@ -32,7 +32,7 @@ public class Course {
 
 
 
-    public Course(String name, Integer courseNum ) {
+    public Course(String name ) {
         this.name = name;
         this.courseNum = courseNum;
         this.createAt = LocalDateTime.now();
