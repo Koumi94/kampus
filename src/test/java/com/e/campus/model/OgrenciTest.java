@@ -47,3 +47,4 @@ public class OgrenciTest {
         assertEquals(1, ogrenci.getCourses().size());
     }
 }
+
