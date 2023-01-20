@@ -5,6 +5,8 @@ import com.e.campus.repository.YukLisansOgrenciRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public  class YukLisansOgrenciServiceImpl implements YukLisansOgrenciService{
 
@@ -22,7 +24,7 @@ public  class YukLisansOgrenciServiceImpl implements YukLisansOgrenciService{
     }
 
     @Override
-    public YukseklisansOgrenci getYukLisansOgrenciById(Long id) {
+    public Optional<YukseklisansOgrenci> getYukLisansOgrenciById(Long id) {
         return null;
     }
 

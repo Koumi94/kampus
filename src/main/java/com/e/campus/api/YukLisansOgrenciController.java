@@ -8,6 +8,7 @@ import com.e.campus.service.YukLisansOgrenciService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/YukLisansOgrenci")
@@ -26,7 +27,7 @@ public class YukLisansOgrenciController {
     }
 
     @GetMapping("/YukLisansOgrenci/{id}")
-    public YukseklisansOgrenci getYukLisansOgrenciById(@PathVariable Long id) {
+    public Optional<YukseklisansOgrenci> getYukLisansOgrenciById(@PathVariable Long id) {
         return yukLisansOgrenciService.getYukLisansOgrenciById(id);
     }
 

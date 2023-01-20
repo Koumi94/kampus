@@ -2,6 +2,8 @@ package com.e.campus.service;
 
 
 import com.e.campus.model.Institute;
+import com.e.campus.model.YuksekCourse;
+import com.e.campus.model.YukseklisansOgrenci;
 
 
 import java.util.List;
@@ -20,4 +22,5 @@ public interface InstituteService {
 
     String deleteInstitute(Long id);
 
+    boolean approveYukCourseRegistration(YukseklisansOgrenci yukseklisansOgrenci, YuksekCourse yuksekCourse);
 }

@@ -1,12 +1,11 @@
 package com.e.campus.service;
 
 import com.e.campus.model.YukseklisansOgrenci;
-import com.e.campus.repository.InstituteRepository;
-import com.e.campus.repository.YukLisansOgrenciRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,7 +16,7 @@ public interface YukLisansOgrenciService {
     public List<YukseklisansOgrenci> getAllYukLisansOgrenci();
 
 
-    YukseklisansOgrenci getYukLisansOgrenciById(Long id);
+    Optional<YukseklisansOgrenci> getYukLisansOgrenciById(Long id);
 
 
 

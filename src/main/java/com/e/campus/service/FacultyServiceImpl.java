@@ -1,6 +1,8 @@
 package com.e.campus.service;
 
 import com.e.campus.model.Faculty;
+import com.e.campus.model.YuksekCourse;
+import com.e.campus.model.YukseklisansOgrenci;
 import com.e.campus.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,11 @@ public class FacultyServiceImpl implements FacultyService{
     @Override
     public Faculty deleteFaculty(Long id) {
         return null;
+    }
+
+    @Override
+    public boolean approveCourseRegistration(YukseklisansOgrenci yukseklisansOgrenci, YuksekCourse yuksekCourse) {
+        return false;
     }
 
     ;

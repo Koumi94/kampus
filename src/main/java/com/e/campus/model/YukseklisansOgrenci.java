@@ -1,39 +1,47 @@
 package com.e.campus.model;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
 public class YukseklisansOgrenci {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue
+    private long id;
 
-    @Column(unique = true, nullable = false)
     private String name;
-    private Integer identity;
+    private String surname;
+    private LocalDateTime dob;
+    private LocalDateTime registerAt;
+    private String semester;
 
-    private String tel;
+    @ManyToMany
+    @JoinTable(name = "yuksek_course_student",
+            joinColumns = @JoinColumn(name = "yukseklisans_ogrenci_id"),
+            inverseJoinColumns = @JoinColumn(name = "yuksek_course_id"))
+    private List<YuksekCourse> yuksekCourses;
 
-    private String email;
-    private LocalDateTime createAt;
-
-
-    public YukseklisansOgrenci(String name, Integer identity,String tel, String email) {
-        this.identity = identity;
-        this.tel = tel;
+    public YukseklisansOgrenci(String name, String surname, LocalDateTime dob, LocalDateTime registerAt, String semester) {
         this.name = name;
-        this.email = email;
-        this.createAt = LocalDateTime.now();
-
-
+        this.surname = surname;
+        this.dob = dob;
+        this.registerAt = registerAt;
+        this.semester = semester;
     }
 
     public YukseklisansOgrenci() {
 
+    }
+
+    public Object getYukOgrenciType() {
+
+        return null;
     }
 }

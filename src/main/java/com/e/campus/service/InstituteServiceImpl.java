@@ -1,6 +1,8 @@
 package com.e.campus.service;
 
 import com.e.campus.model.Institute;
+import com.e.campus.model.YuksekCourse;
+import com.e.campus.model.YukseklisansOgrenci;
 import com.e.campus.repository.InstituteRepository;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +50,10 @@ public class InstituteServiceImpl implements InstituteService{
     @Override
     public String deleteInstitute(Long id) {
         return "supprımer";
+    }
+
+    @Override
+    public boolean approveYukCourseRegistration(YukseklisansOgrenci yukseklisansOgrenci, YuksekCourse yuksekCourse) {
+        return false;
     }
 }
