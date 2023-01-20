@@ -36,7 +36,7 @@ public class CampusApplication {
     {
         return  new BCryptPasswordEncoder();
     }
-    @Bean
+   /* @Bean
     CommandLineRunner run(UserService userService){
         return  args -> {
             userService.saveUserRole(new UserRole(null , "ROLE_ADMIN"));//this one is user for human resources
@@ -50,5 +50,5 @@ public class CampusApplication {
             userService.addRoleToUser("koumi1","ROLE_ADMIN");
             userService.addRoleToUser("koumi1","ROLE_MANAGER");
         };
-    }
+    }*/
 }

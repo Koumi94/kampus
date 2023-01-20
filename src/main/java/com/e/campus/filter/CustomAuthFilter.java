@@ -3,14 +3,13 @@ package com.e.campus.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.e.campus.security.JWToken;
+import com.e.campus.service.JWToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -25,14 +24,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
 @Slf4j
 public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-   /* public CustomAuthFilter(AuthenticationManager authenticationManager){
+   public CustomAuthFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
-    }*/
-   /* @Override
+    }
+   @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -44,21 +44,20 @@ public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
 
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        User user = (User)authResult.getPrincipal();
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+        User user = (User) authResult.getPrincipal();
         String access_token = new JWToken().generateToken(user, 10);
 
         Map<String,String> tokens = new HashMap<>();
         tokens.put("access_token",access_token);
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-    }*/
+    }
 
 
 
 
-
-    public   CustomAuthFilter(AuthenticationManager authenticationManager){
+     /*public   CustomAuthFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
     };
      @Override
@@ -94,5 +93,5 @@ public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
         tokens.put("access_token", access_token);
         tokens.put("refresh_token", refresh_token);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-    }
+    }*/
 }

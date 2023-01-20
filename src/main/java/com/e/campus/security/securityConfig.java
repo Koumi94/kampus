@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,22 +26,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalAuthentication()
-public class securityConfig  {
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+class securityConfig  {
     private  final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-   /* @Bean
+   @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    @Bean
+    /*@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable();
@@ -71,7 +73,6 @@ public class securityConfig  {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/h2-console/**").permitAll();
-        http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
@@ -79,7 +80,11 @@ public class securityConfig  {
                 .antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER")
                 .antMatchers(POST, "/api/user/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
                 .antMatchers(POST, "/faculties/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
-                ;
+        ;
+       // http.authorizeRequests().anyRequest().authenticated();
+        http.sessionManagement().sessionCreationPolicy(STATELESS);
+       // http.addFilter(new CustomAuthFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))));
+       http.addFilterBefore(new CustomAuthFilter(authentication -> authentication), UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
