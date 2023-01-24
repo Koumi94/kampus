@@ -2,8 +2,10 @@ package com.e.campus.api;
 
 import com.e.campus.model.Bolum;
 
-import com.e.campus.model.Faculty;
+import com.e.campus.repository.BolumRepository;
 import com.e.campus.service.BolumService;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,8 +19,10 @@ import java.util.Optional;
 public class BolumController {
 
     private final BolumService bolumService;
-    public BolumController(BolumService bolumService) {
+    private final BolumRepository bolumRepository;
+    public BolumController(BolumService bolumService, BolumRepository bolumRepository) {
         this.bolumService = bolumService;
+        this.bolumRepository = bolumRepository;
     }
     @GetMapping
     public List<Bolum> getAllBolumler() {
@@ -40,8 +44,15 @@ public class BolumController {
         return bolumService.updateBolum(id, bolum);
     }
     @DeleteMapping("/bolum/{id}")
-    public String deleteBolum(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<String> deleteBolum(@PathVariable Long id) {
+        try {
+            bolumRepository.deleteById(id);
+            return new ResponseEntity<>("Bolum has been deleted successfully", HttpStatus.NO_CONTENT);
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>("Bolum not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error deleting bolum", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
