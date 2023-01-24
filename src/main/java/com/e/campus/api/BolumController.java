@@ -40,8 +40,17 @@ public class BolumController {
         return ResponseEntity.created(uri).body(bolumService.addBolum(bolum));
     }
     @PutMapping("/bolum/{id}")
-    public Bolum updateBolum(@PathVariable Long id, @RequestBody Bolum bolum) {
-        return bolumService.updateBolum(id, bolum);
+    public ResponseEntity<Bolum> updateBolum(@PathVariable Long id, @RequestBody Bolum bolum) {
+        try {
+            bolum.setId(id);
+            Bolum updatedBolum = bolumRepository.save(bolum);
+            return new ResponseEntity<>(updatedBolum, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);s
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @DeleteMapping("/bolum/{id}")
     public ResponseEntity<String> deleteBolum(@PathVariable Long id) {
