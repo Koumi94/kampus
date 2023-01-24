@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.e.campus.model.User;
 import com.e.campus.model.UserRole;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -82,6 +83,8 @@ public class UserServiceImpl implements  UserService , UserDetailsService {
         userRoleRepository.save(role);
         return role;
     }
+
+
 
 
 }

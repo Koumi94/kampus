@@ -45,9 +45,8 @@ public class FacultyController {
     }
 
     @PostMapping("/faculty")
-    public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty) {
-        facultyService.addFaculty(faculty);
-        return new ResponseEntity<>(faculty, HttpStatus.CREATED);
+    public Faculty addFaculty(@RequestBody Faculty faculty) {
+        return facultyService.addFaculty(faculty);
     }
 
     @PutMapping("/faculty/{faculty_Id}")

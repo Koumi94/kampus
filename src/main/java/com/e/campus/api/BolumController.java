@@ -4,8 +4,11 @@ import com.e.campus.model.Bolum;
 
 import com.e.campus.model.Faculty;
 import com.e.campus.service.BolumService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +29,11 @@ public class BolumController {
         return bolumService.getBolumById(id);
     }
     @PostMapping("/addbolum")
-    public Bolum addBolum(@RequestBody Bolum bolum) {
-        return bolumService.addBolum(bolum);
+    public ResponseEntity<Bolum> addBolum(@RequestBody Bolum bolum) {
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/bolumler/addbolum").toUriString());
+        return ResponseEntity.created(uri).body(bolumService.addBolum(bolum));
     }
     @PutMapping("/bolum/{id}")
     public Bolum updateBolum(@PathVariable Long id, @RequestBody Bolum bolum) {
@@ -35,7 +41,7 @@ public class BolumController {
     }
     @DeleteMapping("/bolum/{id}")
     public String deleteBolum(@PathVariable Long id) {
-        return "succesul";
+        return null;
     }
 
 }

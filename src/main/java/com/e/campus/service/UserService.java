@@ -2,6 +2,7 @@ package com.e.campus.service;
 
 import com.e.campus.model.User;
 import com.e.campus.model.UserRole;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface UserService {
     List<User> getUsers();
 
     UserRole saveUserRole(UserRole role);
+
+
 }

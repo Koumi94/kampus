@@ -3,6 +3,7 @@ package com.e.campus.security;
 
 
 import com.e.campus.filter.CustomAuthFilter;
+import com.e.campus.filter.CustomAuthorizedFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +36,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 class securityConfig  {
-    private  final UserDetailsService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 
    @Bean
@@ -82,10 +82,10 @@ class securityConfig  {
                 .antMatchers(POST, "/api/user/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
                 .antMatchers(POST, "/faculties/**").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_ADMIN")
         ;
-       // http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-       // http.addFilter(new CustomAuthFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))));
-       http.addFilterBefore(new CustomAuthFilter(authentication -> authentication), UsernamePasswordAuthenticationFilter.class);
+       http.addFilter(new CustomAuthFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))));
+       http.addFilterBefore(new CustomAuthorizedFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
