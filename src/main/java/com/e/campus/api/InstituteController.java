@@ -1,9 +1,14 @@
 package com.e.campus.api;
 
+import com.e.campus.model.Course;
 import com.e.campus.model.Institute;
 import com.e.campus.model.YuksekCourse;
 import com.e.campus.model.YukseklisansOgrenci;
+import com.e.campus.repository.InstituteRepository;
 import com.e.campus.service.*;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +23,14 @@ public class InstituteController {
     private final YuksekCourseService yuksekCourseService;
     private final FacultyService facultyService;
 
-    public InstituteController(InstituteService instituteService, YukLisansOgrenciService yukLisansOgrenciService , YuksekCourseService yuksekCourseService, FacultyService facultyService,  FacultyService facultyService1) {
+    private final InstituteRepository instituteRepository;
+
+    public InstituteController(InstituteService instituteService, YukLisansOgrenciService yukLisansOgrenciService , YuksekCourseService yuksekCourseService, FacultyService facultyService, FacultyService facultyService1, InstituteRepository instituteRepository) {
         this.instituteService = instituteService;
         this.yukLisansOgrenciService = yukLisansOgrenciService;
         this.yuksekCourseService = yuksekCourseService;
         this.facultyService = facultyService1;
+        this.instituteRepository = instituteRepository;
     }
 
 
@@ -42,15 +50,29 @@ public class InstituteController {
     }
 
     @PutMapping("/institute/{id}")
-    public Institute updateInstitute(@PathVariable Long id, @RequestBody Institute institute) {
-        Institute updateInstitute =instituteService.updateInstitute(id, institute);
-        return updateInstitute;
+    public ResponseEntity<Institute> updateInstitute(@PathVariable Long id, @RequestBody Institute institute) {
+        try {
+            institute.setId(id);
+            Institute updatedInstitute = instituteRepository.save(institute);
+            return new ResponseEntity<>(updatedInstitute, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
+
     @DeleteMapping("/institute/{id}")
-    public String deleteInstitute(@PathVariable Long id) {
-        instituteService.deleteInstitute(id);
-        return "messqge deleted";
+    public ResponseEntity<String> deleteInstitute(@PathVariable Long id) {
+        try {
+            instituteRepository.deleteById(id);
+            return new ResponseEntity<>("Course has been deleted successfully", HttpStatus.NO_CONTENT);
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>("Course not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error deleting course", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/student/{studentId}/course/{courseId}/approve")
@@ -58,27 +80,27 @@ public class InstituteController {
         Optional<YukseklisansOgrenci> yukOgrenci = yukLisansOgrenciService.getYukLisansOgrenciById(yukStudentId);
         Optional<YuksekCourse> course = yuksekCourseService.getYukCourseById(yukCourseId);
         if(!yukOgrenci.isPresent() || !course.isPresent()){
-            return "Student or course not found";
+            return "Öğrenci veya kurs bulunamadı";
         }
         //Checking if student is undergraduate or graduate
         if(yukOgrenci.get().getYukOgrenciType().equals("Undergraduate")){
             //Routing request to faculty for approval
             boolean isApproved = facultyService.approveCourseRegistration(yukOgrenci.get(), course.get());
             if(isApproved)
-                return "Course registration approved by faculty";
+                return "Fakülte tarafından onaylanan ders kaydı.";
             else
-                return "Course registration not approved by faculty";
+                return "Fakülte tarafından onaylanmayan ders kaydı.";
         }
         else if(yukOgrenci.get().getYukOgrenciType().equals("Graduate")){
             //Routing request to institute for approval
             boolean isApproved = instituteService.approveYukCourseRegistration(yukOgrenci.get(), course.get());
             if(isApproved)
-                return "Course registration approved by institute";
+                return "Enstitü tarafından onaylanan ders kaydı.";
             else
-                return "Course registration not approved by institute";
+                return "Enstitü tarafından onaylanmayan ders kaydı";
         }
         else
-            return "Invalid student type";
+            return "Geçersiz öğrenci türü";
     }
 
 

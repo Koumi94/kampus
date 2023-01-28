@@ -1,8 +1,13 @@
 package com.e.campus.api;
 import com.e.campus.model.Ogrenci;
 import com.e.campus.model.Course;
+import com.e.campus.repository.CourseRepository;
+import com.e.campus.repository.OgrenciRepository;
 import com.e.campus.service.OgrenciService;
 import com.e.campus.service.CourseService;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +18,14 @@ public class StudentAffairsController {
 
     private final OgrenciService ogrenciService;
     private final CourseService courseService;
+    private final OgrenciRepository ogrenciRepository;
+    private final CourseRepository courseRepository;
 
-    public StudentAffairsController(OgrenciService ogrenciService, CourseService courseService) {
+    public StudentAffairsController(OgrenciService ogrenciService, CourseService courseService, OgrenciRepository ogrenciRepository, CourseRepository courseRepository) {
         this.ogrenciService = ogrenciService;
         this.courseService = courseService;
+        this.ogrenciRepository = ogrenciRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("/ogrenciler")
@@ -35,13 +44,28 @@ public class StudentAffairsController {
     }
 
     @PutMapping("/ogrenci/{id}")
-    public Ogrenci updateOgrenci(@PathVariable Long id, @RequestBody Ogrenci ogrenci) {
-        return ogrenciService.updateOgrenci(id, ogrenci);
+    public ResponseEntity<Ogrenci> updateOgrenci(@PathVariable Long id, @RequestBody Ogrenci ogrenci) {
+        try {
+            ogrenci.setId(id);
+            Ogrenci updatedOgrenci = ogrenciRepository.save(ogrenci);
+            return new ResponseEntity<>(updatedOgrenci, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/ogrenci/{id}")
-    public void deleteStudent(@PathVariable Long id) {
-        ogrenciService.deleteOgrenci(id);
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
+        try {
+            ogrenciRepository.deleteById(id);
+            return new ResponseEntity<>("Ogrenci başarıyla silindi.", HttpStatus.NO_CONTENT);
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>("Ogrenci bulunamadı.", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Ogrenci silinirken hata oluştu.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/student/{studentId}/course/{courseId}")
@@ -49,11 +73,11 @@ public class StudentAffairsController {
         Optional<Ogrenci> ogrenci = ogrenciService.getOgrenciById(studentId);
         Optional<Course> course = courseService.getCourseById(courseId);
         if(!ogrenci.isPresent() || !course.isPresent()){
-            return "Student or course not found";
+            return "Öğrenci veya ders bulunamadı.";
         }
         ogrenci.get().addCourse(course.get());
         ogrenciService.updateOgrenci(ogrenci.get().getId(),ogrenci.get());
-        return "Student successfully assigned to course";
+        return "Öğrenci başarıyla derse atandı.";
 
     }
 
@@ -73,12 +97,27 @@ public class StudentAffairsController {
     }
 
     @PutMapping("/course/{id}")
-    public Course updateCourse(@PathVariable Long id, @RequestBody Course course) {
-        return courseService.updateCourse(id, course);
+    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course course) {
+        try {
+            course.setId(id);
+            Course updatedCourse = courseRepository.save(course);
+            return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/course/{id}")
-    public void deleteCourse(@PathVariable Long id) {
-        courseService.deleteCourse(id);
+    public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
+        try {
+            courseRepository.deleteById(id);
+            return new ResponseEntity<>("Ders başarıyla silindi.", HttpStatus.NO_CONTENT);
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>("Ders bulunamadı.", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Ders silinirken hata oluştu.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

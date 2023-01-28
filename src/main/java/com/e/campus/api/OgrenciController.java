@@ -1,8 +1,11 @@
 package com.e.campus.api;
+import com.e.campus.model.Bolum;
 import com.e.campus.model.Course;
 import com.e.campus.model.Ogrenci;
+import com.e.campus.repository.OgrenciRepository;
 import com.e.campus.service.CourseService;
 import com.e.campus.service.OgrenciService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +19,12 @@ public class OgrenciController {
     private final OgrenciService ogrenciService;
     private final CourseService courseService;
 
-    public OgrenciController(OgrenciService ogrenciService, CourseService courseService) {
+    private final OgrenciRepository ogrenciRepository;
+
+    public OgrenciController(OgrenciService ogrenciService, CourseService courseService, OgrenciRepository ogrenciRepository) {
         this.ogrenciService = ogrenciService;
         this.courseService = courseService;
+        this.ogrenciRepository = ogrenciRepository;
     }
 
 
@@ -45,14 +51,27 @@ public class OgrenciController {
 
     @PutMapping("/ogrenci/{ogrenci_id}")
     public ResponseEntity<Ogrenci> updateOgrenci(@PathVariable Long id, @RequestBody Ogrenci ogrenci) {
-        ogrenciService.updateOgrenci(id, ogrenci);
-        return new ResponseEntity<>(ogrenci, HttpStatus.OK);
+        try {
+            ogrenci.setId(id);
+            Ogrenci updatedOgrenci = ogrenciRepository.save(ogrenci);
+            return new ResponseEntity<>(updatedOgrenci, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/ogrenci/{ogrenci_id}")
-    public ResponseEntity<Void> deleteOgrenci(@PathVariable Long id) {
-        ogrenciService.deleteOgrenci(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteOgrenci(@PathVariable Long id) {
+        try {
+            ogrenciRepository.deleteById(id);
+            return new ResponseEntity<>("Bolum başarıyla silindi.", HttpStatus.NO_CONTENT);
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>("Bolum bulunamadı.", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Bolum silinirken hata oluştu.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/ogrenci/{ogrenci_id}/course/{course_Id}")
