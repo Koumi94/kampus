@@ -15,11 +15,11 @@ public class Contract {
 
     @NotNull
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private String startDate;
 
     @NotNull
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private String endDate;
 
     @NotNull
     @Column(name = "salary")
@@ -31,7 +31,7 @@ public class Contract {
 
     public Contract() {}
 
-    public Contract(LocalDate startDate, LocalDate endDate, Double salary, Staff staff) {
+    public Contract(String startDate, String endDate, Double salary, Staff staff) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.salary = salary;
@@ -42,19 +42,19 @@ public class Contract {
         return id;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

@@ -50,7 +50,6 @@ public class BolumController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
     @DeleteMapping("/bolum/{id}")
     public ResponseEntity<String> deleteBolum(@PathVariable Long id) {

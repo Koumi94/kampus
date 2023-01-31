@@ -10,8 +10,8 @@ public class ContractService {
     @Autowired
     private ContractRepository contractRepository;
 
-    public void createContract(Contract contract) {
-        contractRepository.save(contract);
+    public Contract createContract(Contract contract) {
+        return contractRepository.save(contract);
     }
 
     public void deleteContract(Long id) {

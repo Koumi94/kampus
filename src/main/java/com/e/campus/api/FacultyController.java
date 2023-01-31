@@ -36,8 +36,8 @@ public class FacultyController {
     }
 
     @GetMapping("/faculty/{faculty_Id}")
-    public ResponseEntity<Faculty> getFacultyById(@PathVariable Long facultyId) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+    public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(id);
         if (!faculty.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -49,21 +49,21 @@ public class FacultyController {
         return facultyService.addFaculty(faculty);
     }
 
-    @PutMapping("/faculty/{faculty_Id}")
-    public ResponseEntity<Faculty> updateFaculty(@PathVariable Long facultyId, @RequestBody Faculty faculty) {
-        facultyService.updateFaculty(facultyId, faculty);
+    @PutMapping("/faculty/{id}")
+    public ResponseEntity<Faculty> updateFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
+        facultyService.updateFaculty(id, faculty);
         return new ResponseEntity<>(faculty, HttpStatus.OK);
     }
 
-    @DeleteMapping("/faculty/{faculty_Id}")
-    public ResponseEntity<Void> deleteFaculty(@PathVariable Long facultyId) {
-        facultyService.deleteFaculty(facultyId);
+    @DeleteMapping("/faculty/{id}")
+    public ResponseEntity<String> deleteFaculty(@PathVariable Long id) {
+        facultyService.deleteFaculty(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/faculty/{faculty_Id}/bolum")
-    public ResponseEntity<Bolum> addBolumToFaculty(@PathVariable Long facultyId, @RequestBody Bolum bolum) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+    @PostMapping("/faculty/{id}/bolum")
+    public ResponseEntity<Bolum> addBolumToFaculty(@PathVariable Long id, @RequestBody Bolum bolum) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(id);
         if (!faculty.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -72,9 +72,9 @@ public class FacultyController {
         return new ResponseEntity<>(bolum, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/faculty/{faculty_Id}/bolum/{bolum_id}")
-    public ResponseEntity<Void> removeBolumFromFaculty(@PathVariable Long facultyId, @PathVariable Long bolum_id) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+    @DeleteMapping("/faculty/{id}/bolum/{bolum_id}")
+    public ResponseEntity<Void> removeBolumFromFaculty(@PathVariable Long id, @PathVariable Long bolum_id) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(id);
         if (!faculty.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -84,8 +84,8 @@ public class FacultyController {
 
 
     @PostMapping("/faculty/{faculty_Id}/course")
-    public ResponseEntity<Course> addCourseToFaculty(@PathVariable Long facultyId, @RequestBody Course course) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+    public ResponseEntity<Course> addCourseToFaculty(@PathVariable Long id, @RequestBody Course course) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(id);
         if(!faculty.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -94,9 +94,9 @@ public class FacultyController {
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/faculty/{faculty_Id}/course/{course_Id}")
-    public ResponseEntity<Void> removeCourseFromFaculty(@PathVariable Long facultyId, @PathVariable Long courseId) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+    @DeleteMapping("/faculty/{id}/course/{course_Id}")
+    public ResponseEntity<Void> removeCourseFromFaculty(@PathVariable Long id, @PathVariable Long courseId) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(id);
         if(!faculty.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -23,7 +23,20 @@ public class IkController {
     private StaffService staffService;
 
     @Autowired
+    private  IkService ikService;
+
+    @Autowired
     private ContractService contractService;
+
+    @GetMapping()
+    public ResponseEntity<List<IK>> getAllIk() {
+        List<IK> iks = ikService.getAllIk();
+        return new ResponseEntity<>(iks, HttpStatus.OK);
+    }
+    @PostMapping
+    public IK addIk (@RequestBody IK ik){
+        return ikService.addIk(ik);
+    }
 
     @GetMapping("/staffs")
     public ResponseEntity<List<Staff>> getAllStaff() {

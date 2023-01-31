@@ -49,7 +49,7 @@ public class OgrenciController {
         return new ResponseEntity<>(ogrenci, HttpStatus.CREATED);
     }
 
-    @PutMapping("/ogrenci/{ogrenci_id}")
+    @PutMapping("/ogrenci/{id}")
     public ResponseEntity<Ogrenci> updateOgrenci(@PathVariable Long id, @RequestBody Ogrenci ogrenci) {
         try {
             ogrenci.setId(id);
@@ -62,7 +62,7 @@ public class OgrenciController {
         }
     }
 
-    @DeleteMapping("/ogrenci/{ogrenci_id}")
+    @DeleteMapping("/ogrenci/{id}")
     public ResponseEntity<String> deleteOgrenci(@PathVariable Long id) {
         try {
             ogrenciRepository.deleteById(id);
