@@ -1,6 +1,7 @@
 package com.e.campus.service;
 
 import com.e.campus.model.Bolum;
+import com.e.campus.model.Faculty;
 import com.e.campus.repository.BolumRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,9 @@ public class BolumServiceImpl implements BolumService {
     }
 
 
+
+    @Override
+    public List<Bolum> getAllBolumsForFaculty(Faculty faculty) {
+        return bolumRepository.findByFaculty(faculty);
+    }
 }

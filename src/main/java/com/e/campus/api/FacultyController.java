@@ -61,9 +61,9 @@ public class FacultyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/faculty/{id}/bolum")
-    public ResponseEntity<Bolum> addBolumToFaculty(@PathVariable Long id, @RequestBody Bolum bolum) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(id);
+    @PostMapping("/faculty/{facultyId}/bolum")
+    public ResponseEntity<Bolum> addBolumToFaculty(@PathVariable Long facultyId, @RequestBody Bolum bolum) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
         if (!faculty.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -72,20 +72,32 @@ public class FacultyController {
         return new ResponseEntity<>(bolum, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/faculty/{id}/bolum/{bolum_id}")
-    public ResponseEntity<Void> removeBolumFromFaculty(@PathVariable Long id, @PathVariable Long bolum_id) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(id);
+    @GetMapping("/faculty/{facultyId}/bolum")
+    public ResponseEntity<List<Bolum>> getAllBolumsForFaculty(@PathVariable Long facultyId) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
         if (!faculty.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        bolumService.deleteBolum(bolum_id);
+        List<Bolum> bolums = bolumService.getAllBolumsForFaculty(faculty.get());
+        return new ResponseEntity<>(bolums, HttpStatus.OK);
+    }
+
+
+
+    @DeleteMapping("/faculty/{facultyId}/bolum/{bolumId}")
+    public ResponseEntity<Void> removeBolumFromFaculty(@PathVariable Long facultyId, @PathVariable Long bolumId) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+        if (!faculty.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        bolumService.deleteBolum(bolumId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
-    @PostMapping("/faculty/{faculty_Id}/course")
-    public ResponseEntity<Course> addCourseToFaculty(@PathVariable Long id, @RequestBody Course course) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(id);
+    @PostMapping("/faculty/{facultyId}/course")
+    public ResponseEntity<Course> addCourseToFaculty(@PathVariable Long facultyId, @RequestBody Course course) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
         if(!faculty.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -94,9 +106,9 @@ public class FacultyController {
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/faculty/{id}/course/{course_Id}")
-    public ResponseEntity<Void> removeCourseFromFaculty(@PathVariable Long id, @PathVariable Long courseId) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(id);
+    @DeleteMapping("/faculty/{facultyId}/course/{course_Id}")
+    public ResponseEntity<Void> removeCourseFromFaculty(@PathVariable Long facultyId, @PathVariable Long courseId) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
         if(!faculty.isPresent()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -104,11 +116,11 @@ public class FacultyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/faculties/{facultyId}/course/{course_Id}/ogrenci/{ogrenci_id}")
-    public ResponseEntity<String> assignCourseToOgrenci(@PathVariable Long facultyId, @PathVariable Long courseId, @PathVariable Long studentId) {
+    @PostMapping("/faculties/{facultyId}/course/{courseId}/ogrenci/{ogrenciId}")
+    public ResponseEntity<String> assignCourseToOgrenci(@PathVariable Long facultyId, @PathVariable Long courseId, @PathVariable Long ogrenciId) {
         Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
         Optional<Course> course = courseService.getCourseById(courseId);
-        Optional<Ogrenci> student = ogrenciService.getOgrenciById(studentId);
+        Optional<Ogrenci> student = ogrenciService.getOgrenciById(ogrenciId);
         if(!faculty.isPresent() || !course.isPresent() || !student.isPresent()){
             return new ResponseEntity<>("Fakülte, kurs veya öğrenci bulunamadı", HttpStatus.BAD_REQUEST);
         }

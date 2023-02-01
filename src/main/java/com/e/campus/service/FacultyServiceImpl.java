@@ -1,8 +1,10 @@
 package com.e.campus.service;
 
+import com.e.campus.model.Bolum;
 import com.e.campus.model.Faculty;
 import com.e.campus.model.YuksekCourse;
 import com.e.campus.model.YukseklisansOgrenci;
+import com.e.campus.repository.BolumRepository;
 import com.e.campus.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class FacultyServiceImpl implements FacultyService{
 
     private  final FacultyRepository facultyRepository;
+    private final BolumRepository bolumRepository;
 
 
-    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+    public FacultyServiceImpl(FacultyRepository facultyRepository, BolumRepository bolumRepository) {
         this.facultyRepository = facultyRepository;
+        this.bolumRepository = bolumRepository;
     }
 
     @Override
@@ -57,5 +61,10 @@ public class FacultyServiceImpl implements FacultyService{
 
     public List<Faculty> getAllFaculty() {
         return facultyRepository.findAll();
+    }
+
+    @Override
+    public List<Bolum> getAllBolumsForFaculty(Faculty faculty) {
+        return bolumRepository.findByFaculty(faculty);
     }
 }
