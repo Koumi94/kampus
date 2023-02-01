@@ -2,8 +2,10 @@ package com.e.campus.api;
 
 import com.e.campus.model.Bolum;
 
+import com.e.campus.model.Course;
 import com.e.campus.repository.BolumRepository;
 import com.e.campus.service.BolumService;
+import com.e.campus.service.CourseService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +16,18 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/bolumler")
 public class BolumController {
 
+
     private final BolumService bolumService;
+    private  final CourseService courseService;
     private final BolumRepository bolumRepository;
-    public BolumController(BolumService bolumService, BolumRepository bolumRepository) {
+    public BolumController(BolumService bolumService, CourseService courseService, BolumRepository bolumRepository) {
         this.bolumService = bolumService;
+        this.courseService = courseService;
         this.bolumRepository = bolumRepository;
     }
     @GetMapping
@@ -51,6 +57,21 @@ public class BolumController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/bolum/{bolumId}/course/{courseId}")
+    public ResponseEntity<String> assignCourseToBolum(@PathVariable Long bolumId, @PathVariable Long courseId) {
+
+        Optional<Bolum> bolum = bolumService.getBolumById(bolumId);
+        Optional<Course> course = courseService.getCourseById(courseId);
+        if(!bolum.isPresent() || !course.isPresent()){
+
+            return new ResponseEntity<>("Bölüm veya kurs bulunamadı", HttpStatus.BAD_REQUEST);
+        }
+        bolum.get().addCourse(course.get());
+        bolumService.updateBolum(bolum.get().getId(), bolum.get());
+        return new ResponseEntity<>("Kurs başarıyla bölüme atandı", HttpStatus.OK);
+    }
+
+
     @DeleteMapping("/bolum/{id}")
     public ResponseEntity<String> deleteBolum(@PathVariable Long id) {
         try {

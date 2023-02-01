@@ -1,9 +1,10 @@
 package com.e.campus.api;
-import com.e.campus.model.Bolum;
 import com.e.campus.model.Course;
+import com.e.campus.model.Faculty;
 import com.e.campus.model.Ogrenci;
 import com.e.campus.repository.OgrenciRepository;
 import com.e.campus.service.CourseService;
+import com.e.campus.service.FacultyService;
 import com.e.campus.service.OgrenciService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -18,12 +19,14 @@ public class OgrenciController {
 
     private final OgrenciService ogrenciService;
     private final CourseService courseService;
+    private final FacultyService facultyService;
 
     private final OgrenciRepository ogrenciRepository;
 
-    public OgrenciController(OgrenciService ogrenciService, CourseService courseService, OgrenciRepository ogrenciRepository) {
+    public OgrenciController(OgrenciService ogrenciService, CourseService courseService, FacultyService facultyService, OgrenciRepository ogrenciRepository) {
         this.ogrenciService = ogrenciService;
         this.courseService = courseService;
+        this.facultyService = facultyService;
         this.ogrenciRepository = ogrenciRepository;
     }
 
@@ -85,6 +88,19 @@ public class OgrenciController {
         ogrenciService.updateOgrenci(ogrenci.get().getId(),ogrenci.get());
         return new ResponseEntity<>("Ders, öğrenciye başarıyla eklendi", HttpStatus.OK);
     }
+
+    @PutMapping("/faculties/{facultyId}/ogrenci/{ogrenciId}")
+    public ResponseEntity<String> assignStudentToFaculty(@PathVariable Long facultyId, @PathVariable Long ogrenciId) {
+        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
+        Optional<Ogrenci> student = ogrenciService.getOgrenciById(ogrenciId);
+        if(!faculty.isPresent() || !student.isPresent()){
+            return new ResponseEntity<>("Fakülte veya öğrenci bulunamadı", HttpStatus.BAD_REQUEST);
+        }
+        faculty.get().addStudent(student.get());
+        facultyService.updateFaculty(faculty.get().getId(), faculty.get());
+        return new ResponseEntity<>("Öğrenci başarıyla fakülteye atandı", HttpStatus.OK);
+    }
+
 
 
 

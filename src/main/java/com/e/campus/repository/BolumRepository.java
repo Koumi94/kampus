@@ -13,5 +13,5 @@ import java.util.List;
 public interface BolumRepository extends JpaRepository<Bolum , Long > {
 
 
-    List<Bolum> findByFaculty(Faculty faculty);
+   // List<Bolum> findByFaculty(Faculty faculty);
 }

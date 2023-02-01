@@ -3,11 +3,9 @@ package com.e.campus.api;
 import com.e.campus.model.Bolum;
 import com.e.campus.model.Course;
 import com.e.campus.model.Faculty;
-import com.e.campus.model.Ogrenci;
 import com.e.campus.service.BolumService;
 import com.e.campus.service.CourseService;
 import com.e.campus.service.FacultyService;
-
 import com.e.campus.service.OgrenciService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,9 +49,15 @@ public class FacultyController {
 
     @PutMapping("/faculty/{id}")
     public ResponseEntity<Faculty> updateFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
+        Optional<Faculty> existingFaculty = facultyService.getFacultyById(id);
+        if (!existingFaculty.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        faculty.setId(id);
         facultyService.updateFaculty(id, faculty);
         return new ResponseEntity<>(faculty, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/faculty/{id}")
     public ResponseEntity<String> deleteFaculty(@PathVariable Long id) {
@@ -61,27 +65,21 @@ public class FacultyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/faculty/{facultyId}/bolum")
-    public ResponseEntity<Bolum> addBolumToFaculty(@PathVariable Long facultyId, @RequestBody Bolum bolum) {
+    @PutMapping("/faculty/{facultyId}/bolum/{bolumId}")
+    public ResponseEntity<Faculty> addBolumToFaculty(@PathVariable Long facultyId, @PathVariable Long bolumId) {
         Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
-        if (!faculty.isPresent()) {
+        Optional<Bolum> bolum = bolumService.getBolumById(bolumId);
+        if (!faculty.isPresent() || !bolum.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        bolum.setFaculty(faculty.get());
-        bolumService.addBolum(bolum);
-        return new ResponseEntity<>(bolum, HttpStatus.CREATED);
+            Bolum b = bolum.get();
+            Faculty f =faculty.get();
+            b.setFaculty(f);
+            f.getBolums().add(b);
+            bolumService.updateBolum(bolum.get().getId(), b);
+            facultyService.updateFaculty(faculty.get().getId(), f);
+            return new ResponseEntity<>(f, HttpStatus.CREATED);
     }
-
-    @GetMapping("/faculty/{facultyId}/bolum")
-    public ResponseEntity<List<Bolum>> getAllBolumsForFaculty(@PathVariable Long facultyId) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
-        if (!faculty.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        List<Bolum> bolums = bolumService.getAllBolumsForFaculty(faculty.get());
-        return new ResponseEntity<>(bolums, HttpStatus.OK);
-    }
-
 
 
     @DeleteMapping("/faculty/{facultyId}/bolum/{bolumId}")
@@ -114,19 +112,6 @@ public class FacultyController {
         }
         courseService.deleteCourse(courseId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PostMapping("/faculties/{facultyId}/course/{courseId}/ogrenci/{ogrenciId}")
-    public ResponseEntity<String> assignCourseToOgrenci(@PathVariable Long facultyId, @PathVariable Long courseId, @PathVariable Long ogrenciId) {
-        Optional<Faculty> faculty = facultyService.getFacultyById(facultyId);
-        Optional<Course> course = courseService.getCourseById(courseId);
-        Optional<Ogrenci> student = ogrenciService.getOgrenciById(ogrenciId);
-        if(!faculty.isPresent() || !course.isPresent() || !student.isPresent()){
-            return new ResponseEntity<>("Fakülte, kurs veya öğrenci bulunamadı", HttpStatus.BAD_REQUEST);
-        }
-        student.get().addCourse(course.get());
-        ogrenciService.updateOgrenci(student.get().getId(), student.get());
-        return new ResponseEntity<>("Ders başarıyla öğrenciye atandı", HttpStatus.OK);
     }
 
 }

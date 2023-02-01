@@ -1,6 +1,5 @@
 package com.e.campus.service;
 
-import com.e.campus.model.Bolum;
 import com.e.campus.model.Faculty;
 import com.e.campus.model.YuksekCourse;
 import com.e.campus.model.YukseklisansOgrenci;
@@ -17,5 +16,5 @@ public interface FacultyService {
 
     boolean approveCourseRegistration(YukseklisansOgrenci yukseklisansOgrenci, YuksekCourse yuksekCourse);
 
-    List<Bolum> getAllBolumsForFaculty(Faculty faculty);
+
 }

@@ -1,7 +1,6 @@
 package com.e.campus.service;
 
 import com.e.campus.model.Bolum;
-import com.e.campus.model.Faculty;
 import com.e.campus.repository.BolumRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class BolumServiceImpl implements BolumService {
         return bolumRepository.save(bolum);
     }
     @Override
-    public Bolum updateBolum(Long id, Bolum bolum) {
+    public Bolum updateBolum(long id, Bolum bolum) {
         return bolumRepository.save(bolum);
     }
     @Override
@@ -39,8 +38,23 @@ public class BolumServiceImpl implements BolumService {
 
 
 
-    @Override
-    public List<Bolum> getAllBolumsForFaculty(Faculty faculty) {
-        return bolumRepository.findByFaculty(faculty);
-    }
+
+    //@Override
+    //public List<Bolum> getAllBolumsForFaculty(Faculty faculty) {
+     //  return bolumRepository.findByFaculty(faculty);
+    //}
+
+    //@Override
+   // public List<Bolum> getAllBolumsForFaculty(Faculty faculty) {
+     //   if (faculty == null) {
+     //       throw new IllegalArgumentException("Faculty object cannot be null");
+       // }
+     //   List<Bolum> bolumList = bolumRepository.findByFaculty(faculty);
+     //   if (bolumList == null) {
+      //      throw new NullPointerException("No bolum found for the given faculty");
+      //  }
+        //return bolumList;
+   // }
+
+
 }
