@@ -1,10 +1,13 @@
 package com.e.campus.api;
 import com.e.campus.model.Ogrenci;
 import com.e.campus.model.Course;
+import com.e.campus.model.StudentAffairs;
 import com.e.campus.repository.CourseRepository;
 import com.e.campus.repository.OgrenciRepository;
+import com.e.campus.repository.StudentAffairsRepository;
 import com.e.campus.service.OgrenciService;
 import com.e.campus.service.CourseService;
+import com.e.campus.service.StudentAffService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +23,22 @@ public class StudentAffairsController {
     private final CourseService courseService;
     private final OgrenciRepository ogrenciRepository;
     private final CourseRepository courseRepository;
+    private final StudentAffairsRepository studentAffairsRepository;
+    private final StudentAffService studentAffService;
 
-    public StudentAffairsController(OgrenciService ogrenciService, CourseService courseService, OgrenciRepository ogrenciRepository, CourseRepository courseRepository) {
+    public StudentAffairsController(OgrenciService ogrenciService, CourseService courseService, OgrenciRepository ogrenciRepository, CourseRepository courseRepository, StudentAffairsRepository studentAffairsRepository, StudentAffService studentAffService) {
         this.ogrenciService = ogrenciService;
         this.courseService = courseService;
         this.ogrenciRepository = ogrenciRepository;
         this.courseRepository = courseRepository;
+        this.studentAffairsRepository = studentAffairsRepository;
+        this.studentAffService = studentAffService;
+    }
+
+
+    @PostMapping("")
+    public StudentAffairs addFaculty(@RequestBody StudentAffairs studentAffairs) {
+        return studentAffService.addStudentAffairs(studentAffairs);
     }
 
     @GetMapping("/ogrenciler")
@@ -77,7 +90,7 @@ public class StudentAffairsController {
         }
         ogrenci.get().addCourse(course.get());
         ogrenciService.updateOgrenci(ogrenci.get().getId(),ogrenci.get());
-        return "Öğrenci başarıyla derse atandı.";
+        return "ögrenci işler tarafından Öğrenci başarıyla derse atandı.";
 
     }
 

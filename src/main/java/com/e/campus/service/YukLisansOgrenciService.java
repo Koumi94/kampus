@@ -13,7 +13,7 @@ public interface YukLisansOgrenciService {
 
 
 
-    public List<YukseklisansOgrenci> getAllYukLisansOgrenci();
+     List<YukseklisansOgrenci> getAllYukLisansOgrenci();
 
 
     Optional<YukseklisansOgrenci> getYukLisansOgrenciById(Long id);

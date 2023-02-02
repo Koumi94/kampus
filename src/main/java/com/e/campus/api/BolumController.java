@@ -63,7 +63,6 @@ public class BolumController {
         Optional<Bolum> bolum = bolumService.getBolumById(bolumId);
         Optional<Course> course = courseService.getCourseById(courseId);
         if(!bolum.isPresent() || !course.isPresent()){
-
             return new ResponseEntity<>("Bölüm veya kurs bulunamadı", HttpStatus.BAD_REQUEST);
         }
         bolum.get().addCourse(course.get());

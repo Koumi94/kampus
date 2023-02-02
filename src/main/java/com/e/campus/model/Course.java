@@ -2,6 +2,7 @@
 package com.e.campus.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Course {
 
     @GeneratedValue private LocalDateTime createAt;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "courses")
     private List<Ogrenci> ogrencis;
 
